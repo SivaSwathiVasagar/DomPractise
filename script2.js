@@ -1,5 +1,5 @@
 var menuLinks = [
-  { text: "about", href: "/about" },
+  { text: "about", href: "#" },
   {
     text: "catalog",
     href: "#",
@@ -74,7 +74,6 @@ for (let i = 0; i < menuLinks.length; i++) {
   let a = document.createElement("a");
   a.textContent = menuLinks[i].text;
   a.setAttribute("href", menuLinks[i].href);
-  a.className = "active"; // Task 5.3 add a active class
   topMenuEl.appendChild(a);
 }
 
@@ -98,143 +97,120 @@ let showingSubMenu = "false";
 
 //Task 5.2
 
-topMenuEl.addEventListener("click", notAClick);
-function notAClick(event) {
-  if (event.target instanceof HTMLAnchorElement) {
-    console.log(event.target.text);
-  }
+// topMenuEl.addEventListener("click", notAClick);
+// function notAClick(event) {
+//   if (event.target instanceof HTMLAnchorElement) {
+//     console.log(event.target.text);
+//   }
 
-  // Task 5.3
-  let activeClass = event.target;
-  if (activeClass.classList.contains("active")) {
-    activeClass.classList.remove("active");
-    console.log("Class active has been removed");
-    showingSubMenu = "false";
-    subMenuEl.style.top = 0;
-    return;
-  }
-}
+//   // Task 5.3
+//   let activeClass = event.target;
+//   if (activeClass.classList.contains("active")) {
+//     activeClass.classList.remove("active");
+//     console.log("Class active has been removed");
+//     showingSubMenu = "false";
+//     subMenuEl.style.top = 0;
+//     return;
+//   }
+// }
 
 // Task 5.4
 //   Next, the event listener should remove a class name of activefrom each <a>element in topMenuLinks- whether the activeclass exists or not.
 
 // Hint: Removing a non-existent class from an element does not cause an error, so just remove it!
 
-topMenuEl.addEventListener("click", () => {
-  let removeEl = document.getElementById("top-menu");
-  for (let childEl of removeEl.children) {
-    childEl.classList.remove("active");
-  }
-});
+// topMenuEl.addEventListener("click", () => {
+//   let removeEl = document.getElementById("top-menu");
+//   for (let childEl of removeEl.children) {
+//     childEl.classList.remove("active");
+//   }
+// });
 
- // Task 5.5
-topMenuEl.addEventListener("click", (e) => {
-  let displayVal = e.target.text;
-  if (e.target instanceof HTMLAnchorElement) {
-      e.target.classList.add("active"); 
-  }
-    let displayValIndex = menuLinks.findIndex((item) => item.text === displayVal);     //Task 5.6
-    // console.log(displayValIndex);
-    let x = menuLinks[displayValIndex];
-    showingSubMenu = x.subLinks ? true : false;
-  }
-);
+// Task 5.5
+// topMenuEl.addEventListener("click", (e) => {
+//   let displayVal = e.target.text;
+//   if (e.target instanceof HTMLAnchorElement) {
+//     e.target.classList.add("active");
+//   }
+//   let displayValIndex = menuLinks.findIndex((item) => item.text === displayVal); //Task 5.6
+//   // console.log(displayValIndex);
+//   let x = menuLinks[displayValIndex];
+//   showingSubMenu = x.subLinks ? true : false;
+// });
 
 // Task 5.7
 
-
-topMenuEl.addEventListener("click", (e) => {
-  let displayVal = e.target.text;
-  if (e.target instanceof HTMLAnchorElement) {
-    e.target.classList.add("active");
-  }
-    let displayValIndex = menuLinks.findIndex((item) => item.text === displayVal);     //Task 5.6
-    // console.log(displayValIndex);
-    let x = menuLinks[displayValIndex];
-    showingSubMenu = x.subLinks ? true : false;
-        if(showingSubMenu == true){    // Task 5.7
-          buildSubMenu(x.subLinks);
-     }
-     else{
-      subMenuEl.style.top = 0;
-     }
-      function buildSubMenu(subLinks) {
-        subMenuEl.style.top = '100%';
-      }
-
-});
+// topMenuEl.addEventListener("click", (e) => {
+//   let displayVal = e.target.text;
+//   if (e.target instanceof HTMLAnchorElement) {
+//     e.target.classList.add("active");
+//   }
+//   let displayValIndex = menuLinks.findIndex((item) => item.text === displayVal); //Task 5.6
+//   // console.log(displayValIndex);
+//   let x = menuLinks[displayValIndex];
+//   showingSubMenu = x.subLinks ? true : false;
+//   if (showingSubMenu == true) {
+//     // Task 5.7
+//     buildSubMenu(x.subLinks);
+//   } else {
+//     subMenuEl.style.top = 0;
+//   }
+//   function buildSubMenu(subLinks) {
+//     subMenuEl.style.top = "100%";
+//   }
+// });
 
 // Task 5.8
 topMenuEl.addEventListener("click", (e) => {
+    e.preventDefault() // Task 5.2
+  let removeEl = document.getElementById("top-menu");
+  for (let childEl of removeEl.children) {
+    childEl.classList.remove("active"); // Task 5.3
+  }
+
   let displayVal = e.target.text;
   if (e.target instanceof HTMLAnchorElement) {
     e.target.classList.add("active");
-    e.target.classList.remove("active")   // Task 6.2
   }
-    let displayValIndex = menuLinks.findIndex((item) => item.text === displayVal);     //Task 5.6
-    // console.log(displayValIndex);
-    let x = menuLinks[displayValIndex];
-    showingSubMenu = x.subLinks ? true : false;
-        if(showingSubMenu == true){    // Task 5.7
-          buildSubMenu(x.subLinks);
-     }
-     else{
-      subMenuEl.style.top = 0;
-     }
-      function buildSubMenu(subLinks) {
-        subMenuEl.style.top = '100%';
-        subMenuEl.innerHTML = '';         // Task 5.8
-        for(let i= 0; i<subLinks.length; i++ ){
-          let a = document.createElement("a");
-          a.setAttribute("href", subLinks[i].href);
-          a.textContent = subLinks[i].text;
-          subMenuEl.appendChild(a);
 
-        }
-      }
-
+  let displayValIndex = menuLinks.findIndex((item) => item.text === displayVal); //Task 5.6
+  let x = menuLinks[displayValIndex];
+  showingSubMenu = x.subLinks ? true : false;
+  if (showingSubMenu == true) {
+    // Task 5.7
+    buildSubMenu(x.subLinks);
+  } else {
+    subMenuEl.style.top = 0;
+  }
+  function buildSubMenu(subLinks) {
+    subMenuEl.style.top = "100%";
+    subMenuEl.innerHTML = ""; // Task 5.8
+    for (let i = 0; i < subLinks.length; i++) {
+      let a = document.createElement("a");
+      a.setAttribute("href", subLinks[i].href);
+      a.textContent = subLinks[i].text;
+      subMenuEl.appendChild(a);
+    }
+  }
+  if(displayVal == 'about'){
+    mainEl.innerHTML = `<h1>${displayVal}</h1>`;
+  }
 });
 
-// Task 6.0
-// Attach a delegated 'click' event listener to subMenuEl.
+// // Task 6.0 / 6.1
 
-// The first line of code of the event listener function should call the event object's preventDefault()method.
-
-// The second line of code function should immediately return if the element clicked was not an <a>element.
-
-// console.logthe content of the <a>to verify the handler is working.
-
-subMenuEl.addEventListener('click', e =>{
-  e.preventDefault();
-  if(e.target instanceof HTMLAnchorElement){
-    console.log(e.target )
-  }
-  else{
-    return;
-  }
-  
-})
-
-// Task 6.1
-// Next, the event listener should:
-
-// Set showingSubMenuto false.
-// Set the CSS topproperty of subMenuElto 0.
-
-subMenuEl.addEventListener('click', e =>{
+subMenuEl.addEventListener("click", (e) => {
   let displayVal1 = e.target.text;
-  e.preventDefault();
-  if(e.target instanceof HTMLAnchorElement){
-    console.log(e.target )}
-        // Task 6.3
-      mainEl.innerHTML = e.target.innerHTML;
-      h1Tag.textContent = mainEl.textContent;
-      subMenuEl.appendChild(h1Tag);
-   
-    showingSubMenu = "false"; // Task 6.1
-    subMenuEl.style.top = 0;
-    
+  e.preventDefault(); 
+  if (e.target instanceof HTMLAnchorElement) {
+     mainEl.innerHTML = `<h1>${displayVal1}</h1>`; // Task 6.3
+  }
+  showingSubMenu = "false"; // Task 6.1
+  subMenuEl.style.top = 0;
+});
 
-})
-
+// Task 6.2
+for (let i = 0; i < topMenuLinks.length; i++) {
+  topMenuLinks[i].classList.remove("active");
+}
 
